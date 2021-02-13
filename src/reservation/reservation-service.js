@@ -1,8 +1,10 @@
 const fs = require('fs').promises
 
+
 class ReservationService {
-  constructor({ Reservation }) {
-    this.Reservation = Reservation
+  constructor({ Reservation,user }) {
+    this.Reservation = Reservation;
+    this.user=user;
   }
   async getReservations({ body }) {
     const reservations = await this.Reservation.find({
@@ -14,11 +16,26 @@ class ReservationService {
     return reservations
   }
 
+  //mohamed
+
+  async gettypeReservations({ body }) {
+    const reservations = await this.Reservation.find({
+      type:body.type
+      //  new RegExp(body.type, 'ig'),
+     
+    })
+
+    return reservations
+  }
+
   async createhosting({ body, image, userId }) {
     const { name, location, nOfGuests, type, price, description } = body
     let imageData = await fs.readFile(image.path)
+    
     let base64 = imageData.toString('base64')
+    console.log(base64)
     let imageBuffer = Buffer.from(base64, 'base64')
+    
 
     const hosting = await new this.Reservation({
       name,
@@ -45,8 +62,18 @@ class ReservationService {
   }
 
   async gethostings({ userId }) {
-    const hostings = await this.Reservation.find({ owner: userId })
-    return hostings
+    const hostings = await this.Reservation.find({ owner: userId });
+   
+    
+    
+   
+    return(hostings) 
+  }
+  async getuser({ userId }) {
+   
+    const user=await this.user.findById( userId );
+   
+    return (user )
   }
 
   async getReservationDetails({ reservationId, originalUrl }) {

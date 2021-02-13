@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 const RESERVATION_TYPES = require('./reservation-constants')
 
+
 const reservationSchema = new Schema({
   name: {
     type: String,
