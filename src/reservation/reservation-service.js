@@ -7,9 +7,29 @@ class ReservationService {
     this.user=user;
   }
   async getReservations({ body }) {
+    console.log(body)
+    if(!body.startdate){
+      const reservations = await this.Reservation.find({
+        location: new RegExp(body.location, 'ig'),
+        // indate:body.startdate,
+        // endDate:body.enddata,
+        // ...(body.startdate && { indate: body.startdate }),
+        // ...(body.enddata && { endDate: body.enddata }),
+        // ...(body.nOfGuests && { nOfGuests: body.nOfGuests }),
+        
+        ...(body.type && { type: body.type }),
+      })
+      console.log(reservations)
+      return reservations
+    }
     const reservations = await this.Reservation.find({
       location: new RegExp(body.location, 'ig'),
+      // indate:body.startdate,
+      // endDate:body.enddata,
+      ...(body.startdate && { indate: body.startdate }),
+      ...(body.enddata && { endDate: body.enddata }),
       ...(body.nOfGuests && { nOfGuests: body.nOfGuests }),
+      
       ...(body.type && { type: body.type }),
     })
 
@@ -29,7 +49,7 @@ class ReservationService {
   }
 
   async createhosting({ body, image, userId }) {
-    const { name, location, nOfGuests, type, price, description } = body
+    const { name, location, nOfGuests, type, price, description,indate,endDate} = body
     let imageData = await fs.readFile(image.path)
     
     let base64 = imageData.toString('base64')
@@ -43,6 +63,8 @@ class ReservationService {
       nOfGuests,
       type,
       price,
+      indate,
+      endDate,
       description,
       owner: userId,
       image: imageBuffer,

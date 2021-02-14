@@ -12,8 +12,8 @@ const reservationSchema = new Schema({
     required: true,
   },
   nOfGuests: {
-    type: Number,
-    required: true,
+    type: Number, 
+    //required: true,
   },
   type: {
     type: String,
@@ -23,6 +23,14 @@ const reservationSchema = new Schema({
   price: {
     type: Number,
     required: true,
+  },
+  indate: {
+    type: Date,
+    
+  },
+  endDate: {
+    type: Date,
+    
   },
   image: {
     type: Buffer,

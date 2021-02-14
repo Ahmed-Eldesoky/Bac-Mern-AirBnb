@@ -40,6 +40,7 @@ router.get('/hosting', isAuth, async (req, res) => {
   res.json(hostings);
   
 })
+// 
 router.get('/user', isAuth, async (req, res) => {
   
   const user = await reservationService. getuser({
