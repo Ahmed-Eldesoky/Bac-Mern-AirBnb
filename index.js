@@ -17,5 +17,10 @@ app.use(cors())
 app.use('/user', user)
 app.use('/reservation', reservation)
 
+
+
 const PORT = process.env.PORT || 4000
+
 app.listen(PORT, () => console.info(`Listening on PORT ${PORT}`))
+
+

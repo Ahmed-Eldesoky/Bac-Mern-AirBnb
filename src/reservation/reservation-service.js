@@ -6,33 +6,18 @@ class ReservationService {
     this.Reservation = Reservation;
     this.user=user;
   }
-  async getReservations({ body }) {
-    console.log(body)
-    if(!body.startdate){
-      const reservations = await this.Reservation.find({
-        location: new RegExp(body.location, 'ig'),
-        // indate:body.startdate,
-        // endDate:body.enddata,
-        // ...(body.startdate && { indate: body.startdate }),
-        // ...(body.enddata && { endDate: body.enddata }),
-        // ...(body.nOfGuests && { nOfGuests: body.nOfGuests }),
-        
-        ...(body.type && { type: body.type }),
-      })
-      console.log(reservations)
-      return reservations
-    }
-    const reservations = await this.Reservation.find({
-      location: new RegExp(body.location, 'ig'),
-      // indate:body.startdate,
-      // endDate:body.enddata,
+  async getReservations({ body}) {
+    
+   
+    
+const reservations = await this.Reservation.find({
+      location: new RegExp(body.location.trim(), 'ig'),
+     
       ...(body.startdate && { indate: body.startdate }),
       ...(body.enddata && { endDate: body.enddata }),
       ...(body.nOfGuests && { nOfGuests: body.nOfGuests }),
-      
       ...(body.type && { type: body.type }),
     })
-
     return reservations
   }
 
